@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Meli">
+<meta name="theme-color" content="#3D2436">
+<title>Mi Pequeñita Meli</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 4 L93 27 L93 73 L50 96 L7 73 L7 27 Z' fill='%233D2436'/%3E%3Cpath d='M50 4 L93 27 L93 73 L50 96 L7 73 L7 27 Z' fill='none' stroke='%23D9A441' stroke-width='3'/%3E%3Ctext x='50' y='66' font-size='46' text-anchor='middle' fill='%23D9A441' font-family='Georgia,serif'%3EM%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --blush:#F7EEE6;
+  --card:#FFFBF6;
+  --plum:#3D2436;
+  --plum-soft:#7A6270;
+  --honey:#D9A441;
+  --honey-light:#F0D9A8;
+  --honey-dark:#B9822C;
+  --rose:#D97B87;
+  --sage:#7C9885;
+  --line:#EAD9C4;
+  --shadow: 0 8px 28px rgba(61,36,54,0.10);
+  --font-display: ui-serif, Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{
+  background:#E7DED4;
+  font-family:var(--font-body);
+  color:var(--plum);
+  min-height:100vh;
+}
+button,input,textarea{font-family:inherit; color:inherit;}
+button{cursor:pointer;}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+}
+
+#app{
+  max-width:480px;
+  margin:0 auto;
+  min-height:100vh;
+  background:var(--blush);
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 0 60px rgba(0,0,0,0.15);
+}
+
+/* ---------- HEADER ---------- */
+.app-header{
+  background:var(--plum);
+  color:var(--honey-light);
+  padding:18px 20px 16px;
+  position:relative;
+  overflow:hidden;
+  flex-shrink:0;
+}
+.app-header::before{
+  content:"";
+  position:absolute; top:-20px; right:-30px;
+  width:140px; height:140px;
+  background:none;
+  border:2px solid rgba(217,164,65,0.18);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+.app-header::after{
+  content:"";
+  position:absolute; bottom:-40px; left:-20px;
+  width:90px; height:90px;
+  border:2px solid rgba(217,164,65,0.12);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+.wordmark{
+  font-family:var(--font-display);
+  font-size:22px;
+  position:relative; z-index:1;
+  letter-spacing:0.3px;
+}
+.wordmark .accent{ color:var(--honey); font-style:italic; }
+.header-sub{
+  font-size:12.5px;
+  color:rgba(240,217,168,0.72);
+  margin-top:3px;
+  position:relative; z-index:1;
+  text-transform:capitalize;
+}
+
+/* ---------- MAIN / TABS ---------- */
+main{ flex:1; padding-bottom:100px; }
+.tab-panel{ display:none; padding:20px 18px 8px; animation:fadeIn 0.25s ease; }
+.tab-panel.active{ display:block; }
+@keyframes fadeIn{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+.section-title{
+  font-family:var(--font-display);
+  font-size:19px;
+  font-weight:600;
+  margin:0 0 12px;
+  color:var(--plum);
+}
+.section-sub{
+  font-size:12.5px;
+  color:var(--plum-soft);
+  margin:-8px 0 14px;
+}
+
+/* ---------- CARDS ---------- */
+.card{
+  background:var(--card);
+  border-radius:18px;
+  padding:18px;
+  box-shadow:var(--shadow);
+  border:1px solid var(--line);
+  margin-bottom:14px;
+}
+
+/* ---------- HERO MESSAGE (letter) ---------- */
+.letter{
+  background:var(--card);
+  border-radius:18px;
+  padding:24px 20px 20px;
+  box-shadow:var(--shadow);
+  border:1px solid var(--line);
+  margin-bottom:16px;
+  position:relative;
+  text-align:center;
+}
+.seal{
+  width:46px; height:46px;
+  background:var(--honey);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 12px;
+  box-shadow:0 4px 10px rgba(185,130,44,0.35);
+}
+.seal span{ font-size:20px; }
+.letter-label{
+  font-size:10.5px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--honey-dark);
+  font-weight:600;
+  margin-bottom:10px;
+}
+.letter-msg{
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:19px;
+  line-height:1.5;
+  color:var(--plum);
+  margin:0 0 16px;
+  min-height:76px;
+  display:flex; align-items:center; justify-content:center;
+}
+.letter-actions{ display:flex; gap:10px; justify-content:center; }
+
+/* ---------- BUTTONS ---------- */
+.btn{
+  border:none;
+  border-radius:100px;
+  padding:11px 20px;
+  font-size:14px;
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  transition:transform 0.15s ease, opacity 0.15s ease;
+}
+.btn:active{ transform:scale(0.96); }
+.btn-honey{ background:var(--honey); color:var(--plum); }
+.btn-ghost{ background:transparent; color:var(--plum-soft); border:1px solid var(--line); }
+.btn-plum{ background:var(--plum); color:var(--honey-light); }
+.btn-rose{ background:var(--rose); color:#fff; }
+.btn-block{ width:100%; justify-content:center; }
+.btn-sm{ padding:7px 14px; font-size:12.5px; }
+.icon-btn{
+  background:var(--card); border:1px solid var(--line); border-radius:50%;
+  width:38px; height:38px; display:flex; align-items:center; justify-content:center;
+  font-size:16px;
+}
+
+/* ---------- STAT CHIPS ---------- */
+.stat-row{ display:flex; gap:10px; margin-bottom:16px; }
+.stat-chip{
+  flex:1;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:12px 10px;
+  text-align:center;
+}
+.stat-chip .num{ font-size:20px; font-weight:700; color:var(--plum); display:block; }
+.stat-chip .lbl{ font-size:11px; color:var(--plum-soft); }
+
+/* ---------- TEASER LINKS ---------- */
+.teaser{
+  display:flex; align-items:center; gap:12px;
+  background:var(--card); border:1px solid var(--line);
+  border-radius:16px; padding:14px; margin-bottom:12px;
+}
+.teaser .emoji{ font-size:22px; flex-shrink:0; }
+.teaser .txt{ flex:1; }
+.teaser .txt b{ display:block; font-size:14px; margin-bottom:2px; }
+.teaser .txt span{ font-size:12.5px; color:var(--plum-soft); }
+.teaser .arrow{ color:var(--honey-dark); font-size:16px; }
+
+/* ---------- SEARCH + CHIPS ---------- */
+.search-wrap{ position:relative; margin-bottom:12px; }
+.search-wrap input{
+  width:100%;
+  padding:13px 16px 13px 40px;
+  border-radius:100px;
+  border:1.5px solid var(--line);
+  background:var(--card);
+  font-size:16px;
+  outline:none;
+}
+.search-wrap input:focus{ border-color:var(--honey); }
+.search-wrap .ic{ position:absolute; left:15px; top:50%; transform:translateY(-50%); font-size:15px; opacity:0.5; }
+
+.chip-row{ display:flex; gap:8px; overflow-x:auto; padding-bottom:10px; margin-bottom:6px; -webkit-overflow-scrolling:touch; }
+.chip-row::-webkit-scrollbar{ display:none; }
+.chip{
+  flex-shrink:0;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:100px;
+  padding:8px 15px;
+  font-size:13px;
+  color:var(--plum-soft);
+  white-space:nowrap;
+}
+.chip.active{ background:var(--plum); color:var(--honey-light); border-color:var(--plum); font-weight:600; }
+
+/* ---------- FOOD LIST ---------- */
+.cat-heading{
+  font-size:11.5px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase;
+  color:var(--honey-dark); margin:18px 0 8px;
+}
+.cat-heading:first-child{ margin-top:6px; }
+.food-row{
+  display:flex; align-items:center; gap:12px;
+  background:var(--card); border:1px solid var(--line);
+  border-radius:14px; padding:12px 14px; margin-bottom:8px;
+}
+.food-row .hx{
+  width:30px; height:30px; flex-shrink:0;
+  background:var(--honey-light);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  display:flex; align-items:center; justify-content:center;
+  font-size:13px;
+}
+.food-row .info{ flex:1; min-width:0; }
+.food-row .info b{ display:block; font-size:14.5px; }
+.food-row .info span{ font-size:12px; color:var(--plum-soft); }
+.food-row .kcal{ font-size:13.5px; font-weight:700; color:var(--plum); white-space:nowrap; }
+.empty-note{ text-align:center; color:var(--plum-soft); font-size:13.5px; padding:30px 10px; }
+
+/* ---------- DIARY ---------- */
+.macro-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:10px; }
+.macro-cell{ text-align:center; }
+.macro-cell .v{ font-size:16px; font-weight:700; display:block; }
+.macro-cell .k{ font-size:10.5px; color:var(--plum-soft); }
+.diary-item{
+  display:flex; align-items:center; gap:10px;
+  padding:10px 0; border-bottom:1px solid var(--line);
+}
+.diary-item:last-child{ border-bottom:none; }
+.diary-item .info{ flex:1; }
+.diary-item .info b{ font-size:14px; display:block; }
+.diary-item .info span{ font-size:11.5px; color:var(--plum-soft); }
+.diary-item .kc{ font-size:13px; font-weight:600; color:var(--plum-soft); margin-right:4px; }
+.rm-btn{ background:none; border:none; color:var(--rose); font-size:18px; padding:4px 6px; }
+
+.water-row{ display:flex; align-items:center; justify-content:space-between; margin-top:6px; }
+.water-cups{ display:flex; gap:5px; flex-wrap:wrap; }
+.cup{
+  width:26px; height:26px; border-radius:8px;
+  border:1.5px solid var(--honey);
+  display:flex; align-items:center; justify-content:center; font-size:13px;
+  background:transparent;
+}
+.cup.filled{ background:var(--honey-light); }
+.water-ctrl{ display:flex; align-items:center; gap:10px; }
+.water-ctrl button{
+  width:30px; height:30px; border-radius:50%; border:1px solid var(--line);
+  background:var(--card); font-size:16px; display:flex; align-items:center; justify-content:center;
+}
+
+.mood-row{ display:flex; justify-content:space-between; margin-top:8px; gap:6px; }
+.mood-btn{
+  flex:1; background:var(--card); border:1.5px solid var(--line); border-radius:14px;
+  padding:10px 4px; text-align:center; font-size:20px;
+}
+.mood-btn span{ display:block; font-size:9.5px; margin-top:3px; color:var(--plum-soft); font-weight:600;}
+.mood-btn.sel{ border-color:var(--honey); background:var(--honey-light); }
+
+textarea.jnote{
+  width:100%; border:1.5px solid var(--line); border-radius:14px; padding:12px;
+  font-size:14.5px; resize:vertical; min-height:70px; outline:none; margin-top:8px; background:var(--card);
+}
+textarea.jnote:focus{ border-color:var(--honey); }
+.save-row{ display:flex; justify-content:flex-end; align-items:center; gap:8px; margin-top:8px; }
+.saved-tick{ font-size:12px; color:var(--sage); opacity:0; transition:opacity 0.3s; }
+.saved-tick.show{ opacity:1; }
+
+/* ---------- ANIMO ---------- */
+.msg-list-item{
+  background:var(--card); border:1px solid var(--line); border-radius:14px;
+  padding:13px 14px; margin-bottom:8px; display:flex; align-items:flex-start; gap:10px;
+}
+.msg-list-item p{ margin:0; flex:1; font-size:14px; line-height:1.45; font-style:italic; font-family:var(--font-display); }
+.fav-btn{ background:none; border:none; font-size:17px; flex-shrink:0; padding:2px; }
+.novio-card{
+  background:linear-gradient(160deg, var(--plum), #52324a);
+  border-radius:18px; padding:18px; margin-bottom:16px; color:var(--honey-light);
+}
+.novio-card .lbl{ font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--honey); font-weight:700; margin-bottom:8px; }
+.novio-card p{ font-family:var(--font-display); font-style:italic; font-size:15.5px; line-height:1.5; margin:0; }
+.novio-nav{ display:flex; justify-content:flex-end; gap:8px; margin-top:12px; }
+.novio-nav button{ background:rgba(217,164,65,0.18); border:none; color:var(--honey-light); width:28px; height:28px; border-radius:50%; font-size:13px; }
+
+.footnote{ font-size:11.5px; color:var(--plum-soft); text-align:center; margin:20px 0 6px; line-height:1.5; padding:0 10px; }
+
+/* ---------- BOTTOM NAV ---------- */
+.bottom-nav{
+  position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+  width:100%; max-width:480px;
+  background:var(--plum);
+  display:flex;
+  padding:10px 8px max(10px, env(safe-area-inset-bottom));
+  box-shadow:0 -6px 20px rgba(0,0,0,0.15);
+  z-index:20;
+}
+.nav-btn{
+  flex:1; background:none; border:none; display:flex; flex-direction:column; align-items:center; gap:3px;
+  padding:6px 2px; color:rgba(240,217,168,0.55); font-size:10.5px; font-weight:600;
+}
+.nav-btn .ic{ font-size:19px; }
+.nav-btn .dot{ width:4px; height:4px; border-radius:50%; background:transparent; margin-bottom:1px; }
+.nav-btn.active{ color:var(--honey-light); }
+.nav-btn.active .dot{ background:var(--honey); }
+
+/* ---------- OVERLAY / MODAL ---------- */
+.overlay{
+  position:fixed; inset:0; background:rgba(61,36,54,0.55);
+  display:flex; align-items:flex-end; justify-content:center; z-index:100;
+  backdrop-filter:blur(2px);
+}
+.overlay.hidden{ display:none; }
+.modal{
+  background:var(--blush);
+  width:100%; max-width:480px;
+  border-radius:24px 24px 0 0;
+  padding:22px 20px max(22px, env(safe-area-inset-bottom));
+  max-height:85vh; overflow-y:auto;
+  animation:slideUp 0.25s ease;
+}
+@keyframes slideUp{ from{transform:translateY(30px); opacity:0;} to{transform:translateY(0); opacity:1;} }
+.modal.hidden{ display:none; }
+.modal-handle{ width:38px; height:4px; background:var(--line); border-radius:4px; margin:0 auto 16px; }
+.modal h3{ font-family:var(--font-display); font-size:20px; margin:0 0 4px; }
+.modal .por{ font-size:12.5px; color:var(--plum-soft); margin-bottom:16px; }
+.nutri-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-bottom:18px; }
+.nutri-box{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px; text-align:center; }
+.nutri-box .v{ font-size:19px; font-weight:700; }
+.nutri-box .k{ font-size:11px; color:var(--plum-soft); }
+.form-field{ margin-bottom:12px; }
+.form-field label{ font-size:12.5px; font-weight:600; display:block; margin-bottom:5px; color:var(--plum-soft); }
+.form-field input, .form-field textarea{
+  width:100%; padding:11px 13px; border-radius:12px; border:1.5px solid var(--line);
+  font-size:16px; outline:none; background:var(--card);
+}
+.form-field input:focus, .form-field textarea:focus{ border-color:var(--honey); }
+.form-grid2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+
+.toast{
+  position:fixed; bottom:96px; left:50%; transform:translateX(-50%) translateY(20px);
+  background:var(--plum); color:var(--honey-light); padding:11px 20px; border-radius:100px;
+  font-size:13.5px; font-weight:600; opacity:0; transition:all 0.3s ease; z-index:200; white-space:nowrap;
+  box-shadow:0 6px 18px rgba(0,0,0,0.2);
+}
+.toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+.welcome-body{ text-align:center; padding:6px 4px 4px; }
+.welcome-body .seal{ margin-bottom:16px; }
+.welcome-body h2{ font-family:var(--font-display); font-size:23px; margin:0 0 12px; }
+.welcome-body p{ font-size:14.5px; line-height:1.6; color:var(--plum-soft); margin:0 0 22px; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="app-header">
+    <div class="wordmark">Mi Pequeñita <span class="accent">Meli</span></div>
+    <div class="header-sub" id="header-date"></div>
+  </div>
+
+  <main>
+
+    <!-- ===================== INICIO ===================== -->
+    <section id="tab-inicio" class="tab-panel active">
+      <div class="letter">
+        <div class="seal"><span>🍯</span></div>
+        <div class="letter-label">mensaje de hoy para ti</div>
+        <p class="letter-msg" id="hero-msg">Cargando...</p>
+        <div class="letter-actions">
+          <button class="btn btn-honey btn-sm" id="btn-new-msg">✨ Otro mensaje</button>
+          <button class="btn btn-ghost btn-sm" id="btn-fav-hero">🤍 Guardar</button>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-chip"><span class="num" id="stat-foods">0</span><span class="lbl">alimentos hoy</span></div>
+        <div class="stat-chip"><span class="num" id="stat-water">0</span><span class="lbl">vasos de agua</span></div>
+        <div class="stat-chip"><span class="num" id="stat-mood">–</span><span class="lbl">ánimo de hoy</span></div>
+      </div>
+
+      <div class="teaser" data-goto="animo">
+        <div class="emoji">💌</div>
+        <div class="txt"><b>Una nota de tu novio</b><span>Toca para leerla</span></div>
+        <div class="arrow">›</div>
+      </div>
+
+      <div class="card">
+        <div class="letter-label" style="margin-bottom:8px;">🌿 consejo del día</div>
+        <p style="margin:0; font-size:14px; line-height:1.55;" id="tip-of-day"></p>
+      </div>
+
+      <div class="teaser" data-goto="alimentos">
+        <div class="emoji">🍎</div>
+        <div class="txt"><b>Conoce lo que comes</b><span>Busca cualquier alimento y su información</span></div>
+        <div class="arrow">›</div>
+      </div>
+    </section>
+
+    <!-- ===================== ALIMENTOS ===================== -->
+    <section id="tab-alimentos" class="tab-panel">
+      <div class="section-title">Alimentos</div>
+      <div class="section-sub">Busca un alimento y descubre qué contiene, sin miedo — solo información 💛</div>
+      <div class="search-wrap">
+        <span class="ic">🔍</span>
+        <input type="text" id="search-input" placeholder="Buscar alimento, ej. aguacate...">
+      </div>
+      <div class="chip-row" id="chip-row"></div>
+      <div id="food-list"></div>
+      <button class="btn btn-ghost btn-block" id="btn-add-custom-food" style="margin-top:8px;">+ Agregar un alimento que no encontraste</button>
+    </section>
+
+    <!-- ===================== DIARIO ===================== -->
+    <section id="tab-diario" class="tab-panel">
+      <div class="section-title">Mi Diario</div>
+      <div class="section-sub" id="diary-date-sub"></div>
+
+      <div class="card">
+        <div class="letter-label" style="margin-bottom:2px;">resumen de hoy</div>
+        <div class="macro-grid">
+          <div class="macro-cell"><span class="v" id="d-kcal">0</span><span class="k">kcal</span></div>
+          <div class="macro-cell"><span class="v" id="d-prot">0g</span><span class="k">proteína</span></div>
+          <div class="macro-cell"><span class="v" id="d-carb">0g</span><span class="k">carbos</span></div>
+          <div class="macro-cell"><span class="v" id="d-gras">0g</span><span class="k">grasa</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="letter-label">alimentos registrados</div>
+        <div id="diary-food-list"></div>
+      </div>
+
+      <div class="card">
+        <div class="letter-label">💧 agua</div>
+        <div class="water-row">
+          <div class="water-cups" id="water-cups"></div>
+          <div class="water-ctrl">
+            <button id="water-minus">–</button>
+            <button id="water-plus">+</button>
+          </div>
+        </div>
+        <p style="font-size:12px; color:var(--plum-soft); margin:10px 0 0;" id="water-note"></p>
+      </div>
+
+      <div class="card">
+        <div class="letter-label">¿cómo te sientes hoy?</div>
+        <div class="mood-row" id="mood-row"></div>
+      </div>
+
+      <div class="card">
+        <div class="letter-label">nota del día (privada)</div>
+        <textarea class="jnote" id="journal-input" placeholder="Escribe lo que quieras recordar de hoy..."></textarea>
+        <div class="save-row">
+          <span class="saved-tick" id="journal-saved">Guardado ✓</span>
+          <button class="btn btn-plum btn-sm" id="btn-save-journal">Guardar nota</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ANIMO ===================== -->
+    <section id="tab-animo" class="tab-panel">
+      <div class="section-title">Ánimo</div>
+      <div class="section-sub">Un espacio con cariño para ti</div>
+
+      <div class="novio-card">
+        <div class="lbl">de tu novio, para ti</div>
+        <p id="novio-msg"></p>
+        <div class="novio-nav">
+          <button id="novio-prev">‹</button>
+          <button id="novio-next">›</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="letter-label" style="margin-bottom:10px;">mis razones (solo tuyas)</div>
+        <textarea class="jnote" id="reasons-input" placeholder="¿Por qué quieres hacer este cambio? Escríbelo para ti misma..."></textarea>
+        <div class="save-row">
+          <span class="saved-tick" id="reasons-saved">Guardado ✓</span>
+          <button class="btn btn-plum btn-sm" id="btn-save-reasons">Guardar</button>
+        </div>
+      </div>
+
+      <div class="section-title" style="margin-top:22px;">Frases para ti</div>
+      <div id="msg-list"></div>
+
+      <div class="card" style="margin-top:6px;">
+        <div class="letter-label" style="margin-bottom:10px;">agregar tu propio mensaje</div>
+        <textarea class="jnote" id="custom-msg-input" placeholder="Escribe una frase que quieras recibir de vez en cuando..." style="min-height:50px;"></textarea>
+        <div class="save-row" style="justify-content:flex-end;">
+          <button class="btn btn-honey btn-sm" id="btn-add-msg">+ Agregar</button>
+        </div>
+      </div>
+
+      <p class="footnote">Los valores nutricionales de esta app son de referencia aproximada y no sustituyen la orientación de un nutriólogo o médico. Esta app no busca imponer reglas — busca acompañarte. 💛</p>
+    </section>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-tab="inicio"><span class="dot"></span><span class="ic">🏠</span>Inicio</button>
+    <button class="nav-btn" data-tab="alimentos"><span class="dot"></span><span class="ic">🍎</span>Alimentos</button>
+    <button class="nav-btn" data-tab="diario"><span class="dot"></span><span class="ic">📔</span>Diario</button>
+    <button class="nav-btn" data-tab="animo"><span class="dot"></span><span class="ic">💌</span>Ánimo</button>
+  </nav>
+</div>
+
+<!-- MODALS -->
+<div id="overlay" class="overlay hidden">
+
+  <div id="modal-food" class="modal hidden">
+    <div class="modal-handle"></div>
+    <h3 id="mf-name"></h3>
+    <div class="por" id="mf-portion"></div>
+    <div class="nutri-grid">
+      <div class="nutri-box"><span class="v" id="mf-kcal"></span><br><span class="k">calorías</span></div>
+      <div class="nutri-box"><span class="v" id="mf-prot"></span><br><span class="k">proteína</span></div>
+      <div class="nutri-box"><span class="v" id="mf-carb"></span><br><span class="k">carbohidratos</span></div>
+      <div class="nutri-box"><span class="v" id="mf-gras"></span><br><span class="k">grasa</span></div>
+      <div class="nutri-box"><span class="v" id="mf-fib"></span><br><span class="k">fibra</span></div>
+    </div>
+    <button class="btn btn-honey btn-block" id="mf-add">+ Agregar a mi diario de hoy</button>
+    <button class="btn btn-ghost btn-block" id="mf-close" style="margin-top:8px;">Cerrar</button>
+  </div>
+
+  <div id="modal-custom-food" class="modal hidden">
+    <div class="modal-handle"></div>
+    <h3>Agregar alimento</h3>
+    <div class="por" style="margin-bottom:14px;">Ponle los datos que traiga el empaque o los que conozcas</div>
+    <div class="form-field"><label>Nombre del alimento</label><input type="text" id="cf-name" placeholder="ej. Yogur de fresa marca X"></div>
+    <div class="form-field"><label>Porción</label><input type="text" id="cf-portion" placeholder="ej. 1 vaso (200g)"></div>
+    <div class="form-grid2">
+      <div class="form-field"><label>Calorías</label><input type="number" inputmode="decimal" id="cf-kcal" placeholder="0"></div>
+      <div class="form-field"><label>Proteína (g)</label><input type="number" inputmode="decimal" id="cf-prot" placeholder="0"></div>
+      <div class="form-field"><label>Carbohidratos (g)</label><input type="number" inputmode="decimal" id="cf-carb" placeholder="0"></div>
+      <div class="form-field"><label>Grasa (g)</label><input type="number" inputmode="decimal" id="cf-gras" placeholder="0"></div>
+    </div>
+    <div class="form-field"><label>Fibra (g) — opcional</label><input type="number" inputmode="decimal" id="cf-fib" placeholder="0"></div>
+    <button class="btn btn-honey btn-block" id="cf-save">Guardar alimento</button>
+    <button class="btn btn-ghost btn-block" id="cf-close" style="margin-top:8px;">Cancelar</button>
+  </div>
+
+  <div id="modal-welcome" class="modal hidden">
+    <div class="welcome-body">
+      <div class="seal" style="margin-left:auto;margin-right:auto;"><span>🍯</span></div>
+      <h2>Bienvenida, mi pequeñita Meli 💕</h2>
+      <p>Esta app es un espacio para ti: para sentirte acompañada, informada y en paz con este nuevo comienzo.<br><br>No hay reglas estrictas ni números que cumplir a la perfección — solo herramientas para conocer lo que comes, y recordarte todos los días lo increíble que ya eres.<br><br>Vamos paso a paso, juntos. 🌿</p>
+      <button class="btn btn-honey btn-block" id="welcome-start">Empezar</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =================================================================
+   DATOS
+   ================================================================= */
+const FOODS = [
+  {name:"Manzana",cat:"Frutas",por:"1 pieza mediana (180g)",kcal:95,prot:0.5,carb:25,gras:0.3,fib:4.4},
+  {name:"Plátano",cat:"Frutas",por:"1 pieza mediana (120g)",kcal:105,prot:1.3,carb:27,gras:0.4,fib:3.1},
+  {name:"Naranja",cat:"Frutas",por:"1 pieza (130g)",kcal:62,prot:1.2,carb:15,gras:0.2,fib:3.1},
+  {name:"Fresas",cat:"Frutas",por:"1 taza (150g)",kcal:49,prot:1,carb:12,gras:0.5,fib:3},
+  {name:"Uvas",cat:"Frutas",por:"1 taza (150g)",kcal:104,prot:1.1,carb:27,gras:0.2,fib:1.4},
+  {name:"Papaya",cat:"Frutas",por:"1 taza (145g)",kcal:62,prot:0.7,carb:16,gras:0.2,fib:2.5},
+  {name:"Mango",cat:"Frutas",por:"1 taza (165g)",kcal:99,prot:1.4,carb:25,gras:0.6,fib:2.6},
+  {name:"Piña",cat:"Frutas",por:"1 taza (165g)",kcal:82,prot:0.9,carb:22,gras:0.2,fib:2.3},
+  {name:"Sandía",cat:"Frutas",por:"1 taza (152g)",kcal:46,prot:0.9,carb:11.5,gras:0.2,fib:0.6},
+  {name:"Pera",cat:"Frutas",por:"1 pieza (178g)",kcal:101,prot:0.6,carb:27,gras:0.2,fib:5.5},
+  {name:"Melón",cat:"Frutas",por:"1 taza (160g)",kcal:54,prot:1.3,carb:13,gras:0.3,fib:1.4},
+  {name:"Aguacate",cat:"Frutas",por:"1/2 pieza (100g)",kcal:160,prot:2,carb:8.5,gras:14.7,fib:6.7},
+  {name:"Limón",cat:"Frutas",por:"1 pieza (58g)",kcal:17,prot:0.6,carb:5.4,gras:0.2,fib:1.6},
+  {name:"Toronja",cat:"Frutas",por:"1/2 pieza (123g)",kcal:52,prot:0.9,carb:13,gras:0.2,fib:2},
+
+  {name:"Lechuga",cat:"Verduras",por:"1 taza (47g)",kcal:5,prot:0.5,carb:1,gras:0.1,fib:0.5},
+  {name:"Jitomate",cat:"Verduras",por:"1 pieza mediana (123g)",kcal:22,prot:1.1,carb:4.8,gras:0.2,fib:1.5},
+  {name:"Zanahoria",cat:"Verduras",por:"1 pieza (61g)",kcal:25,prot:0.6,carb:6,gras:0.1,fib:1.7},
+  {name:"Brócoli",cat:"Verduras",por:"1 taza (91g)",kcal:31,prot:2.5,carb:6,gras:0.3,fib:2.4},
+  {name:"Espinaca",cat:"Verduras",por:"1 taza cruda (30g)",kcal:7,prot:0.9,carb:1.1,gras:0.1,fib:0.7},
+  {name:"Pepino",cat:"Verduras",por:"1 taza (104g)",kcal:16,prot:0.7,carb:3.8,gras:0.1,fib:0.5},
+  {name:"Calabacita",cat:"Verduras",por:"1 taza (124g)",kcal:20,prot:1.5,carb:4,gras:0.3,fib:1.3},
+  {name:"Elote",cat:"Verduras",por:"1 pieza (90g)",kcal:96,prot:3.4,carb:21,gras:1.5,fib:2.4},
+  {name:"Papa",cat:"Verduras",por:"1 pieza mediana (173g)",kcal:161,prot:4.3,carb:37,gras:0.2,fib:3.8},
+  {name:"Camote",cat:"Verduras",por:"1 pieza mediana (130g)",kcal:112,prot:2,carb:26,gras:0.1,fib:3.9},
+  {name:"Chile",cat:"Verduras",por:"1 pieza (45g)",kcal:18,prot:0.9,carb:4.3,gras:0.2,fib:0.8},
+  {name:"Cebolla",cat:"Verduras",por:"1/2 taza picada (80g)",kcal:32,prot:0.9,carb:7.5,gras:0.1,fib:1.4},
+  {name:"Nopales",cat:"Verduras",por:"1 taza (86g)",kcal:14,prot:1.1,carb:3,gras:0.1,fib:1.9},
+  {name:"Champiñones",cat:"Verduras",por:"1 taza (70g)",kcal:15,prot:2.2,carb:2.3,gras:0.2,fib:0.7},
+
+  {name:"Pechuga de pollo",cat:"Proteínas",por:"100g cocida",kcal:165,prot:31,carb:0,gras:3.6,fib:0},
+  {name:"Huevo",cat:"Proteínas",por:"1 pieza grande",kcal:72,prot:6.3,carb:0.4,gras:4.8,fib:0},
+  {name:"Carne de res molida",cat:"Proteínas",por:"100g cocida",kcal:176,prot:20,carb:0,gras:10,fib:0},
+  {name:"Atún en agua",cat:"Proteínas",por:"100g",kcal:116,prot:26,carb:0,gras:1,fib:0},
+  {name:"Salmón",cat:"Proteínas",por:"100g cocido",kcal:208,prot:20,carb:0,gras:13,fib:0},
+  {name:"Frijoles negros",cat:"Proteínas",por:"1 taza cocidos (172g)",kcal:227,prot:15,carb:41,gras:0.9,fib:15},
+  {name:"Frijoles pintos",cat:"Proteínas",por:"1 taza cocidos (171g)",kcal:245,prot:15,carb:45,gras:1.1,fib:15},
+  {name:"Lentejas",cat:"Proteínas",por:"1 taza cocidas (198g)",kcal:230,prot:18,carb:40,gras:0.8,fib:16},
+  {name:"Garbanzos",cat:"Proteínas",por:"1 taza cocidos (164g)",kcal:269,prot:14.5,carb:45,gras:4.2,fib:12.5},
+  {name:"Queso panela",cat:"Proteínas",por:"30g",kcal:60,prot:6,carb:1,gras:4,fib:0},
+  {name:"Queso fresco",cat:"Proteínas",por:"30g",kcal:74,prot:4.5,carb:1.2,gras:6,fib:0},
+  {name:"Yogur griego natural",cat:"Proteínas",por:"170g",kcal:100,prot:17,carb:6,gras:0.7,fib:0},
+  {name:"Tofu firme",cat:"Proteínas",por:"100g",kcal:144,prot:15.5,carb:3,gras:8.7,fib:2.3},
+  {name:"Camarón",cat:"Proteínas",por:"100g cocido",kcal:99,prot:24,carb:0.2,gras:0.3,fib:0},
+  {name:"Pavo (pechuga)",cat:"Proteínas",por:"100g cocida",kcal:135,prot:30,carb:0,gras:1,fib:0},
+
+  {name:"Arroz blanco",cat:"Granos",por:"1 taza cocido (158g)",kcal:205,prot:4.3,carb:45,gras:0.4,fib:0.6},
+  {name:"Arroz integral",cat:"Granos",por:"1 taza cocido (195g)",kcal:216,prot:5,carb:45,gras:1.8,fib:3.5},
+  {name:"Avena cocida",cat:"Granos",por:"1 taza (234g)",kcal:166,prot:6,carb:28,gras:3.6,fib:4},
+  {name:"Pan integral",cat:"Granos",por:"1 rebanada (28g)",kcal:69,prot:3.6,carb:12,gras:1.1,fib:1.9},
+  {name:"Pan blanco",cat:"Granos",por:"1 rebanada (25g)",kcal:67,prot:2,carb:12.7,gras:0.8,fib:0.6},
+  {name:"Tortilla de maíz",cat:"Granos",por:"1 pieza (24g)",kcal:52,prot:1.4,carb:10.7,gras:0.5,fib:1.5},
+  {name:"Tortilla de harina",cat:"Granos",por:"1 pieza (45g)",kcal:140,prot:3.8,carb:24,gras:3.3,fib:1.4},
+  {name:"Pasta cocida",cat:"Granos",por:"1 taza (140g)",kcal:221,prot:8,carb:43,gras:1.3,fib:2.5},
+  {name:"Quinoa cocida",cat:"Granos",por:"1 taza (185g)",kcal:222,prot:8,carb:39,gras:3.6,fib:5.2},
+  {name:"Cereal de caja",cat:"Granos",por:"1 taza (30g)",kcal:110,prot:2,carb:24,gras:1,fib:2},
+
+  {name:"Leche entera",cat:"Lácteos",por:"1 taza (244g)",kcal:149,prot:7.7,carb:12,gras:8,fib:0},
+  {name:"Leche descremada",cat:"Lácteos",por:"1 taza (245g)",kcal:83,prot:8.3,carb:12,gras:0.2,fib:0},
+  {name:"Yogur natural",cat:"Lácteos",por:"1 taza (245g)",kcal:149,prot:8.5,carb:11.4,gras:8,fib:0},
+  {name:"Queso oaxaca",cat:"Lácteos",por:"30g",kcal:96,prot:6.3,carb:0.7,gras:7.5,fib:0},
+  {name:"Queso manchego",cat:"Lácteos",por:"30g",kcal:108,prot:7,carb:0.5,gras:8.8,fib:0},
+  {name:"Requesón",cat:"Lácteos",por:"1/2 taza (113g)",kcal:92,prot:12,carb:3.4,gras:3.5,fib:0},
+  {name:"Crema",cat:"Lácteos",por:"2 cdas (30g)",kcal:63,prot:0.4,carb:0.6,gras:6.9,fib:0},
+
+  {name:"Agua",cat:"Bebidas",por:"1 vaso (240ml)",kcal:0,prot:0,carb:0,gras:0,fib:0},
+  {name:"Café negro",cat:"Bebidas",por:"1 taza sin azúcar",kcal:2,prot:0.3,carb:0,gras:0,fib:0},
+  {name:"Té",cat:"Bebidas",por:"1 taza sin azúcar",kcal:2,prot:0,carb:0.5,gras:0,fib:0},
+  {name:"Refresco de cola",cat:"Bebidas",por:"1 lata (355ml)",kcal:140,prot:0,carb:39,gras:0,fib:0},
+  {name:"Jugo de naranja",cat:"Bebidas",por:"1 taza (248g)",kcal:112,prot:1.7,carb:26,gras:0.5,fib:0.5},
+  {name:"Agua de jamaica",cat:"Bebidas",por:"1 vaso (240ml, poca azúcar)",kcal:40,prot:0,carb:10,gras:0,fib:0},
+  {name:"Leche de almendra sin azúcar",cat:"Bebidas",por:"1 taza (240ml)",kcal:39,prot:1.5,carb:3.4,gras:2.9,fib:0.5},
+
+  {name:"Almendras",cat:"Snacks",por:"28g (~23 piezas)",kcal:164,prot:6,carb:6,gras:14,fib:3.5},
+  {name:"Nueces",cat:"Snacks",por:"28g",kcal:185,prot:4.3,carb:3.9,gras:18.5,fib:1.9},
+  {name:"Cacahuates",cat:"Snacks",por:"28g",kcal:161,prot:7.3,carb:4.6,gras:14,fib:2.4},
+  {name:"Pan dulce (concha)",cat:"Snacks",por:"1 pieza (80g)",kcal:280,prot:6,carb:45,gras:9,fib:1.5},
+  {name:"Galletas marías",cat:"Snacks",por:"4 piezas (28g)",kcal:130,prot:2,carb:22,gras:4,fib:0.5},
+  {name:"Chocolate amargo 70%",cat:"Snacks",por:"30g",kcal:170,prot:2,carb:13,gras:12,fib:3},
+  {name:"Palomitas naturales",cat:"Snacks",por:"3 tazas (24g)",kcal:93,prot:3,carb:19,gras:1,fib:3.5},
+  {name:"Aceite de oliva",cat:"Snacks",por:"1 cda (14g)",kcal:119,prot:0,carb:0,gras:13.5,fib:0},
+  {name:"Mantequilla de maní",cat:"Snacks",por:"2 cdas (32g)",kcal:188,prot:8,carb:6,gras:16,fib:2},
+  {name:"Miel",cat:"Snacks",por:"1 cda (21g)",kcal:64,prot:0.1,carb:17,gras:0,fib:0},
+  {name:"Azúcar",cat:"Snacks",por:"1 cda (12g)",kcal:49,prot:0,carb:12.6,gras:0,fib:0},
+
+  {name:"Taco de pollo",cat:"Comidas preparadas",por:"1 pieza (tortilla de maíz)",kcal:120,prot:9,carb:11,gras:4.5,fib:1},
+  {name:"Quesadilla de queso",cat:"Comidas preparadas",por:"1 pieza (tortilla de harina)",kcal:260,prot:11,carb:24,gras:14,fib:1},
+  {name:"Torta (jamón y queso)",cat:"Comidas preparadas",por:"1 pieza",kcal:450,prot:20,carb:50,gras:18,fib:3},
+  {name:"Tamal de pollo",cat:"Comidas preparadas",por:"1 pieza",kcal:220,prot:8,carb:28,gras:9,fib:2},
+  {name:"Pozole de pollo",cat:"Comidas preparadas",por:"1 taza",kcal:220,prot:15,carb:22,gras:8,fib:3},
+  {name:"Enchiladas verdes de pollo",cat:"Comidas preparadas",por:"2 piezas",kcal:380,prot:20,carb:30,gras:20,fib:3},
+  {name:"Sopa de fideo",cat:"Comidas preparadas",por:"1 taza",kcal:110,prot:3,carb:20,gras:2,fib:1},
+  {name:"Caldo de pollo con verduras",cat:"Comidas preparadas",por:"1 taza",kcal:90,prot:8,carb:8,gras:3,fib:1.5},
+  {name:"Chilaquiles verdes",cat:"Comidas preparadas",por:"1 porción",kcal:380,prot:12,carb:35,gras:22,fib:4},
+  {name:"Frijoles refritos",cat:"Comidas preparadas",por:"1/2 taza",kcal:118,prot:7,carb:20,gras:1.5,fib:7}
+];
+
+const CATS = ["Todos","Frutas","Verduras","Proteínas","Granos","Lácteos","Bebidas","Snacks","Comidas preparadas"];
+
+const MESSAGES = [
+"Cada paso que das hoy cuenta, aunque sea pequeño.",
+"No se trata de ser perfecta, se trata de ser constante.",
+"Tu cuerpo ha estado contigo toda la vida, trátalo con cariño.",
+"Un día a la vez. No tienes que resolverlo todo hoy.",
+"Está bien tener días difíciles, lo importante es seguir intentando.",
+"El cambio real toma tiempo, y tú tienes todo el tiempo del mundo.",
+"Eres más fuerte de lo que crees.",
+"Hoy es una nueva oportunidad para cuidarte.",
+"No compitas con la de ayer, celebra a la de hoy.",
+"Cada elección saludable es un acto de amor propio.",
+"El progreso no siempre se ve en la báscula.",
+"Mereces sentirte bien en tu propio cuerpo.",
+"Confía en el proceso, incluso cuando sea lento.",
+"Eres capaz de esto y de mucho más.",
+"Un pequeño paso hoy es mejor que ningún paso.",
+"Sé paciente contigo misma, estás aprendiendo algo nuevo.",
+"Tu esfuerzo de hoy ya está haciendo la diferencia, aunque no lo notes.",
+"No estás sola en esto.",
+"Cada día que lo intentas ya es una victoria.",
+"Mereces el mismo cariño que le das a los demás.",
+"Beber agua es un pequeño gran hábito, ¡vas muy bien!",
+"Comer con conciencia, no con culpa.",
+"Aprender sobre lo que comes te da poder, no miedo.",
+"Hoy elige algo que te haga sentir bien, no solo que se vea bien.",
+"Tu bienestar es la meta, no la perfección.",
+"Respira. Puedes con esto.",
+"Cada comida es una nueva oportunidad, no una prueba que puedas reprobar.",
+"El descanso también es parte de cuidarte.",
+"Celebra lo que tu cuerpo puede hacer, no solo cómo se ve.",
+"Rodéate de paciencia y compasión, empezando por ti misma.",
+"No hay prisa. Este es tu camino, a tu paso.",
+"Hoy puedes elegir cuidarte, y eso ya es hermoso.",
+"Los hábitos pequeños, repetidos, cambian todo.",
+"Confía en ti. Ya diste el primer paso, el más difícil.",
+"No busques ser alguien más, solo la mejor versión de ti misma.",
+"Cada intento cuenta, incluso si no sale perfecto.",
+"Tu valor no depende de un número.",
+"Ir despacio también es avanzar.",
+"Equivocarte un día no borra todo lo que has logrado.",
+"Eres mucho más que un plan alimenticio.",
+"Cada 'sí' a tu bienestar es una victoria silenciosa.",
+"No busques la perfección, busca sentirte mejor poco a poco.",
+"Tienes permiso de ir a tu propio ritmo.",
+"Hoy cuenta, y mañana también contará.",
+"Estás construyendo un hábito de amor propio, no una obligación."
+];
+
+const NOVIO_MSGS = [
+"Mi pequeñita Meli, estoy muy orgulloso de ti por dar este paso 💕",
+"No importa qué tan lento vayas, yo voy a estar aquí apoyándote.",
+"Te admiro por tu valentía para empezar algo nuevo.",
+"Para mí ya eres increíble; esto es solo para que tú te sientas aún mejor.",
+"Cuenta conmigo en los días buenos y en los difíciles.",
+"Vamos a lograrlo juntos, un día a la vez.",
+"Eres mi motivo para ser mejor cada día también.",
+"Aquí estoy, creyendo en ti siempre. Te amo, pequeñita."
+];
+
+const TIPS = [
+"Empieza agregando verduras a tus platillos, no tienes que quitar nada todavía.",
+"Tomar agua antes de cada comida te ayuda a sentirte mejor.",
+"No existen alimentos 'prohibidos', existen porciones y equilibrio.",
+"Dormir bien es tan importante como comer bien.",
+"Celebra las victorias pequeñas, no solo el resultado final.",
+"Escuchar a tu cuerpo es más importante que seguir reglas estrictas.",
+"Un antojo no arruina el progreso, es parte de ser humana.",
+"Cocinar en casa te da más control, sin necesidad de contar cada cosa.",
+"El progreso no es lineal, y está bien tener días difíciles.",
+"Compara tu hoy con tu ayer, no con nadie más."
+];
+
+const MOODS = [
+  {e:"😊",l:"Feliz"},
+  {e:"💪",l:"Motivada"},
+  {e:"😌",l:"Tranquila"},
+  {e:"😔",l:"Baja"},
+  {e:"😰",l:"Ansiosa"}
+];
+
+/* =================================================================
+   ESTADO
+   ================================================================= */
+let state = {
+  activeTab:"inicio",
+  customFoods:[],
+  customMsgs:[],
+  favorites:[],
+  diary:{foods:[],water:0,mood:null,journal:""},
+  reasons:"",
+  activeCat:"Todos",
+  search:"",
+  today: todayKey(),
+  heroMsgIdx:0,
+  novioIdx:0
+};
+
+/* =================================================================
+   UTILIDADES
+   ================================================================= */
+function todayKey(){
+  const d=new Date();
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+function nowTime(){
+  const d=new Date();
+  return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");
+}
+function normalize(s){
+  return String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+}
+function esc(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+function round1(n){ return Math.round(n*10)/10; }
+function allFoods(){ return FOODS.concat(state.customFoods); }
+function allMessages(){ return MESSAGES.concat(state.customMsgs); }
+function fmtDate(){
+  const d=new Date();
+  const opts={weekday:"long",day:"numeric",month:"long"};
+  return d.toLocaleDateString("es-MX",opts);
+}
+function showToast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;
+  t.classList.add("show");
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer=setTimeout(()=>t.classList.remove("show"),2200);
+}
+
+/* =================================================================
+   ALMACENAMIENTO
+   ================================================================= */
+async function sGet(key){
+  try{
+    const r=await window.storage.get(key,false);
+    return r ? JSON.parse(r.value) : null;
+  }catch(e){ return null; }
+}
+async function sSet(key,val){
+  try{
+    await window.storage.set(key,JSON.stringify(val),false);
+    return true;
+  }catch(e){ console.error("storage error",e); return false; }
+}
+
+async function loadAll(){
+  const [diary,cf,cm,fav,reasons,seen] = await Promise.all([
+    sGet("diary:"+state.today),
+    sGet("custom-foods"),
+    sGet("custom-messages"),
+    sGet("favorites"),
+    sGet("reasons"),
+    sGet("onboarding-seen")
+  ]);
+  state.diary = diary || {foods:[],water:0,mood:null,journal:""};
+  state.customFoods = cf || [];
+  state.customMsgs = cm || [];
+  state.favorites = fav || [];
+  state.reasons = reasons || "";
+  document.getElementById("journal-input").value = state.diary.journal || "";
+  document.getElementById("reasons-input").value = state.reasons || "";
+  renderAll();
+  if(!seen){ openModal("modal-welcome"); }
+}
+async function saveDiary(){ await sSet("diary:"+state.today, state.diary); }
+
+/* =================================================================
+   RENDER — INICIO
+   ================================================================= */
+function pickHeroMsg(){
+  const list = allMessages();
+  state.heroMsgIdx = Math.floor(Math.random()*list.length);
+  return list[state.heroMsgIdx];
+}
+function renderInicio(){
+  document.getElementById("header-date").textContent = fmtDate();
+  if(!window.__heroSet){
+    document.getElementById("hero-msg").textContent = pickHeroMsg();
+    window.__heroSet = true;
+  }
+  document.getElementById("stat-foods").textContent = state.diary.foods.length;
+  document.getElementById("stat-water").textContent = state.diary.water;
+  const moodObj = MOODS.find(m=>m.l===state.diary.mood);
+  document.getElementById("stat-mood").textContent = moodObj ? moodObj.e : "–";
+  const dayIdx = Math.floor(Date.now()/86400000) % TIPS.length;
+  document.getElementById("tip-of-day").textContent = TIPS[dayIdx];
+}
+
+/* =================================================================
+   RENDER — ALIMENTOS
+   ================================================================= */
+function renderChips(){
+  const row=document.getElementById("chip-row");
+  row.innerHTML = CATS.map(c=>
+    `<button class="chip ${c===state.activeCat?'active':''}" data-cat="${esc(c)}">${esc(c)}</button>`
+  ).join("");
+}
+function renderFoodList(){
+  const list=document.getElementById("food-list");
+  const q = normalize(state.search.trim());
+  const foods = allFoods();
+
+  let filtered = foods.filter(f=>{
+    const matchCat = state.activeCat==="Todos" || f.cat===state.activeCat;
+    const matchQ = !q || normalize(f.name).includes(q);
+    return matchCat && matchQ;
+  });
+
+  if(filtered.length===0){
+    list.innerHTML = `<div class="empty-note">No encontramos ese alimento.<br>Puedes agregarlo tú misma abajo 👇</div>`;
+    return;
+  }
+
+  if(state.activeCat==="Todos" && !q){
+    let html="";
+    CATS.slice(1).forEach(cat=>{
+      const items = filtered.filter(f=>f.cat===cat);
+      if(items.length===0) return;
+      html += `<div class="cat-heading">${esc(cat)}</div>`;
+      html += items.map(f=>foodRowHtml(f, foods.indexOf(f))).join("");
+    });
+    list.innerHTML = html;
+  }else{
+    list.innerHTML = filtered.map(f=>foodRowHtml(f, foods.indexOf(f))).join("");
+  }
+}
+function foodRowHtml(f, idx){
+  return `<div class="food-row" data-idx="${idx}">
+    <div class="hx">🍽</div>
+    <div class="info"><b>${esc(f.name)}</b><span>${esc(f.por)}</span></div>
+    <div class="kcal">${f.kcal} kcal</div>
+  </div>`;
+}
+function renderAlimentos(){ renderChips(); renderFoodList(); }
+
+/* =================================================================
+   RENDER — DIARIO
+   ================================================================= */
+function diaryTotals(){
+  return state.diary.foods.reduce((a,f)=>{
+    a.kcal+=f.kcal; a.prot+=f.prot; a.carb+=f.carb; a.gras+=f.gras;
+    return a;
+  },{kcal:0,prot:0,carb:0,gras:0});
+}
+function renderDiario(){
+  document.getElementById("diary-date-sub").textContent = "Hoy, " + fmtDate();
+  const t = diaryTotals();
+  document.getElementById("d-kcal").textContent = Math.round(t.kcal);
+  document.getElementById("d-prot").textContent = round1(t.prot)+"g";
+  document.getElementById("d-carb").textContent = round1(t.carb)+"g";
+  document.getElementById("d-gras").textContent = round1(t.gras)+"g";
+
+  const list = document.getElementById("diary-food-list");
+  if(state.diary.foods.length===0){
+    list.innerHTML = `<div class="empty-note">Aún no registras nada hoy.<br>Ve a "Alimentos" para agregar el primero 🍎</div>`;
+  }else{
+    list.innerHTML = state.diary.foods.map(f=>
+      `<div class="diary-item">
+        <div class="info"><b>${esc(f.name)}</b><span>${esc(f.por)} · ${f.time}</span></div>
+        <span class="kc">${f.kcal} kcal</span>
+        <button class="rm-btn" data-id="${f.id}">✕</button>
+      </div>`
+    ).join("");
+  }
+
+  const cups=document.getElementById("water-cups");
+  let cupsHtml="";
+  const total = Math.max(state.diary.water, 8);
+  for(let i=1;i<=Math.max(8,state.diary.water);i++){
+    cupsHtml += `<div class="cup ${i<=state.diary.water?'filled':''}">${i<=state.diary.water?'💧':''}</div>`;
+  }
+  cups.innerHTML = cupsHtml;
+  const wn = document.getElementById("water-note");
+  if(state.diary.water===0) wn.textContent="Cada vaso cuenta 💧";
+  else if(state.diary.water<8) wn.textContent="Vas muy bien, sigue así 💛";
+  else wn.textContent="¡Excelente hidratación hoy! 🌿";
+
+  const mr=document.getElementById("mood-row");
+  mr.innerHTML = MOODS.map(m=>
+    `<button class="mood-btn ${state.diary.mood===m.l?'sel':''}" data-mood="${esc(m.l)}">${m.e}<span>${esc(m.l)}</span></button>`
+  ).join("");
+}
+
+/* =================================================================
+   RENDER — ANIMO
+   ================================================================= */
+function renderNovio(){
+  document.getElementById("novio-msg").textContent = NOVIO_MSGS[state.novioIdx];
+}
+function renderMsgList(){
+  const list = document.getElementById("msg-list");
+  const msgs = allMessages();
+  list.innerHTML = msgs.map(m=>{
+    const isFav = state.favorites.includes(m);
+    return `<div class="msg-list-item">
+      <p>${esc(m)}</p>
+      <button class="fav-btn" data-msg="${esc(m)}">${isFav?'❤️':'🤍'}</button>
+    </div>`;
+  }).join("");
+}
+function renderAnimo(){ renderNovio(); renderMsgList(); }
+
+function renderAll(){ renderInicio(); renderAlimentos(); renderDiario(); renderAnimo(); }
+
+/* =================================================================
+   MODALES
+   ================================================================= */
+function openModal(id){
+  document.getElementById("overlay").classList.remove("hidden");
+  document.querySelectorAll(".modal").forEach(m=>m.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+}
+function closeModal(){
+  document.getElementById("overlay").classList.add("hidden");
+}
+
+let currentFoodIdx = null;
+function openFoodDetail(idx){
+  const f = allFoods()[idx];
+  if(!f) return;
+  currentFoodIdx = idx;
+  document.getElementById("mf-name").textContent = f.name;
+  document.getElementById("mf-portion").textContent = "Por " + f.por;
+  document.getElementById("mf-kcal").textContent = f.kcal;
+  document.getElementById("mf-prot").textContent = round1(f.prot)+"g";
+  document.getElementById("mf-carb").textContent = round1(f.carb)+"g";
+  document.getElementById("mf-gras").textContent = round1(f.gras)+"g";
+  document.getElementById("mf-fib").textContent = round1(f.fib)+"g";
+  openModal("modal-food");
+}
+
+/* =================================================================
+   ACCIONES
+   ================================================================= */
+async function addFoodToDiary(f){
+  state.diary.foods.push({
+    id: Date.now()+Math.random().toString(36).slice(2,7),
+    name: f.name, por: f.por, kcal: f.kcal, prot: f.prot, carb: f.carb, gras: f.gras,
+    time: nowTime()
+  });
+  await saveDiary();
+  renderDiario(); renderInicio();
+  showToast("¡Agregado a tu diario! 🎉");
+}
+async function removeFoodFromDiary(id){
+  state.diary.foods = state.diary.foods.filter(f=>f.id!==id);
+  await saveDiary();
+  renderDiario(); renderInicio();
+}
+async function changeWater(delta){
+  state.diary.water = Math.max(0, state.diary.water + delta);
+  await saveDiary();
+  renderDiario(); renderInicio();
+}
+async function setMood(label){
+  state.diary.mood = state.diary.mood===label ? null : label;
+  await saveDiary();
+  renderDiario(); renderInicio();
+}
+async function saveJournalText(){
+  state.diary.journal = document.getElementById("journal-input").value;
+  await saveDiary();
+  flashSaved("journal-saved");
+}
+async function saveReasonsText(){
+  state.reasons = document.getElementById("reasons-input").value;
+  await sSet("reasons", state.reasons);
+  flashSaved("reasons-saved");
+}
+function flashSaved(id){
+  const el=document.getElementById(id);
+  el.classList.add("show");
+  setTimeout(()=>el.classList.remove("show"),1800);
+}
+async function toggleFavorite(msg){
+  if(state.favorites.includes(msg)){
+    state.favorites = state.favorites.filter(m=>m!==msg);
+  }else{
+    state.favorites.push(msg);
+  }
+  await sSet("favorites", state.favorites);
+  renderMsgList();
+}
+async function addCustomMessage(text){
+  text = text.trim();
+  if(!text) return;
+  state.customMsgs.push(text);
+  await sSet("custom-messages", state.customMsgs);
+  renderMsgList();
+  showToast("Mensaje agregado 💛");
+}
+async function addCustomFood(food){
+  state.customFoods.push(food);
+  await sSet("custom-foods", state.customFoods);
+  renderAlimentos();
+  showToast("Alimento agregado 🍽");
+}
+
+/* =================================================================
+   NAVEGACIÓN
+   ================================================================= */
+function switchTab(tab){
+  state.activeTab = tab;
+  document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
+  document.getElementById("tab-"+tab).classList.add("active");
+  document.querySelectorAll(".nav-btn").forEach(b=>{
+    b.classList.toggle("active", b.dataset.tab===tab);
+  });
+  window.scrollTo(0,0);
+}
+
+/* =================================================================
+   EVENTOS
+   ================================================================= */
+document.querySelectorAll(".nav-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>switchTab(btn.dataset.tab));
+});
+document.querySelectorAll("[data-goto]").forEach(el=>{
+  el.addEventListener("click",()=>switchTab(el.dataset.goto));
+});
+
+document.getElementById("btn-new-msg").addEventListener("click",()=>{
+  document.getElementById("hero-msg").textContent = pickHeroMsg();
+});
+document.getElementById("btn-fav-hero").addEventListener("click",async ()=>{
+  const msg = allMessages()[state.heroMsgIdx];
+  await toggleFavorite(msg);
+  showToast(state.favorites.includes(msg) ? "Guardado en tus favoritos ❤️" : "Quitado de favoritos");
+});
+
+document.getElementById("search-input").addEventListener("input",(e)=>{
+  state.search = e.target.value;
+  renderFoodList();
+});
+document.getElementById("chip-row").addEventListener("click",(e)=>{
+  const chip = e.target.closest(".chip");
+  if(!chip) return;
+  state.activeCat = chip.dataset.cat;
+  renderChips(); renderFoodList();
+});
+document.getElementById("food-list").addEventListener("click",(e)=>{
+  const row = e.target.closest(".food-row");
+  if(!row) return;
+  openFoodDetail(+row.dataset.idx);
+});
+document.getElementById("mf-add").addEventListener("click",async ()=>{
+  const f = allFoods()[currentFoodIdx];
+  if(f){ await addFoodToDiary(f); }
+  closeModal();
+});
+document.getElementById("mf-close").addEventListener("click",closeModal);
+
+document.getElementById("btn-add-custom-food").addEventListener("click",()=>{
+  ["cf-name","cf-portion","cf-kcal","cf-prot","cf-carb","cf-gras","cf-fib"].forEach(id=>{
+    document.getElementById(id).value="";
+  });
+  openModal("modal-custom-food");
+});
+document.getElementById("cf-close").addEventListener("click",closeModal);
+document.getElementById("cf-save").addEventListener("click",async ()=>{
+  const name = document.getElementById("cf-name").value.trim();
+  if(!name){ showToast("Ponle un nombre al alimento"); return; }
+  const food = {
+    name,
+    cat:"Personalizados",
+    por: document.getElementById("cf-portion").value.trim() || "1 porción",
+    kcal: parseFloat(document.getElementById("cf-kcal").value)||0,
+    prot: parseFloat(document.getElementById("cf-prot").value)||0,
+    carb: parseFloat(document.getElementById("cf-carb").value)||0,
+    gras: parseFloat(document.getElementById("cf-gras").value)||0,
+    fib: parseFloat(document.getElementById("cf-fib").value)||0
+  };
+  await addCustomFood(food);
+  closeModal();
+});
+
+document.getElementById("diary-food-list").addEventListener("click",(e)=>{
+  const btn = e.target.closest(".rm-btn");
+  if(!btn) return;
+  removeFoodFromDiary(btn.dataset.id);
+});
+document.getElementById("water-plus").addEventListener("click",()=>changeWater(1));
+document.getElementById("water-minus").addEventListener("click",()=>changeWater(-1));
+document.getElementById("mood-row").addEventListener("click",(e)=>{
+  const btn = e.target.closest(".mood-btn");
+  if(!btn) return;
+  setMood(btn.dataset.mood);
+});
+document.getElementById("btn-save-journal").addEventListener("click",saveJournalText);
+document.getElementById("btn-save-reasons").addEventListener("click",saveReasonsText);
+
+document.getElementById("novio-prev").addEventListener("click",()=>{
+  state.novioIdx = (state.novioIdx - 1 + NOVIO_MSGS.length) % NOVIO_MSGS.length;
+  renderNovio();
+});
+document.getElementById("novio-next").addEventListener("click",()=>{
+  state.novioIdx = (state.novioIdx + 1) % NOVIO_MSGS.length;
+  renderNovio();
+});
+document.getElementById("msg-list").addEventListener("click",(e)=>{
+  const btn = e.target.closest(".fav-btn");
+  if(!btn) return;
+  toggleFavorite(btn.dataset.msg);
+});
+document.getElementById("btn-add-msg").addEventListener("click",async ()=>{
+  const ta = document.getElementById("custom-msg-input");
+  await addCustomMessage(ta.value);
+  ta.value="";
+});
+
+document.getElementById("welcome-start").addEventListener("click",async ()=>{
+  await sSet("onboarding-seen", true);
+  closeModal();
+});
+document.getElementById("overlay").addEventListener("click",(e)=>{
+  if(e.target.id==="overlay"){ closeModal(); }
+});
+
+/* =================================================================
+   INICIO
+   ================================================================= */
+loadAll();
+</script>
+</body>
+</html>
