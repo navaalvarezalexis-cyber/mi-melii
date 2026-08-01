@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Meli">
+<meta name="theme-color" content="#3D2436">
+<meta name="description" content="Una app hecha con cariño para acompañar a Meli en su cambio de alimentación.">
+<title>Mi Pequeñita Meli</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <div class="app-header">
+    <div class="header-left">
+      <div class="wordmark">Mi Pequeñita <span class="accent">Meli</span></div>
+      <div class="header-sub" id="header-date"></div>
+    </div>
+    <button class="gear-btn" id="gear-btn">⚙️</button>
+  </div>
+
+  <main>
+
+    <!-- ===================== INICIO ===================== -->
+    <section id="tab-inicio" class="tab-panel active">
+      <div class="stagger">
+      <div class="letter">
+        <div class="seal"><span>🍯</span></div>
+        <div class="letter-label">mensaje de hoy para ti</div>
+        <p class="letter-msg" id="hero-msg">Cargando...</p>
+        <div class="letter-actions">
+          <button class="btn btn-honey btn-sm" id="btn-new-msg">✨ Otro mensaje</button>
+          <button class="btn btn-ghost btn-sm" id="btn-fav-hero">🤍 Guardar</button>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-chip"><span class="num" id="stat-foods">0</span><span class="lbl">alimentos hoy</span></div>
+        <div class="stat-chip"><span class="num" id="stat-water">0</span><span class="lbl">vasos de agua</span></div>
+        <div class="stat-chip"><span class="num" id="stat-mood">–</span><span class="lbl">ánimo de hoy</span></div>
+      </div>
+
+      <div class="teaser" data-goto="animo">
+        <div class="emoji">💌</div>
+        <div class="txt"><b>Una nota de tu novio</b><span>Toca para leerla</span></div>
+        <div class="arrow">›</div>
+      </div>
+
+      <div class="card">
+        <div class="letter-label" style="margin-bottom:8px;">🌿 consejo del día</div>
+        <p style="margin:0; font-size:14px; line-height:1.55;" id="tip-of-day"></p>
+      </div>
+
+      <div class="teaser" data-goto="alimentos">
+        <div class="emoji">🍎</div>
+        <div class="txt"><b>Conoce lo que comes</b><span>Busca cualquier alimento o prueba una receta</span></div>
+        <div class="arrow">›</div>
+      </div>
+      <div class="teaser" data-goto="ejercicio">
+        <div class="emoji">🏋️</div>
+        <div class="txt"><b>Tu rincón de gym</b><span>Rutinas guiadas y ejercicios para empezar sin miedo</span></div>
+        <div class="arrow">›</div>
+      </div>
+      <div class="teaser" data-goto="progreso">
+        <div class="emoji">📈</div>
+        <div class="txt"><b>Tu progreso</b><span>Mira tu semana y tus logros</span></div>
+        <div class="arrow">›</div>
+      </div>
+      </div>
+    </section>
+
+    <!-- ===================== ALIMENTOS / RECETAS ===================== -->
+    <section id="tab-alimentos" class="tab-panel">
+      <div class="section-title">🍎 Comer</div>
+      <div class="section-sub">Sin miedo — solo información, a tu ritmo 💛</div>
+
+      <div class="card">
+        <div class="letter-label" style="margin-bottom:6px;">🌱 primeros pasos de tu cambio de alimentación</div>
+        <div id="food-tips-list"></div>
+      </div>
+
+      <div class="toggle-row" id="comer-toggle-row">
+        <button class="toggle-btn active" data-view="alimentos">Alimentos</button>
+        <button class="toggle-btn" data-view="recetas">Recetas</button>
+      </div>
+
+      <div id="view-alimentos">
+        <div class="search-wrap">
+          <span class="ic">🔍</span>
+          <input type="text" id="search-input" placeholder="Buscar alimento, ej. aguacate...">
+        </div>
+        <div class="chip-row" id="chip-row"></div>
+        <div id="food-list"></div>
+        <button class="btn btn-ghost btn-block" id="btn-add-custom-food" style="margin-top:8px;">+ Agregar un alimento que no encontraste</button>
+      </div>
+
+      <div id="view-recetas" style="display:none;">
+        <div class="section-sub" style="margin-top:0;">Ideas sencillas — tócalas para agregarlas a tu diario</div>
+        <div id="recipe-list"></div>
+      </div>
+    </section>
+
+    <!-- ===================== EJERCICIO / GYM ===================== -->
+    <section id="tab-ejercicio" class="tab-panel">
+      <div class="section-title">🏋️ Gym</div>
+      <div class="section-sub">Moverte también es cuidarte — a tu ritmo, sin comparaciones</div>
+
+      <div class="card">
+        <div class="letter-label" style="margin-bottom:6px;">📋 antes de tu primera vez en el gym</div>
+        <div id="gym-tips-list"></div>
+      </div>
+
+      <div class="toggle-row" id="gym-toggle-row">
+        <button class="toggle-btn active" data-gymview="rutinas">Rutinas</button>
+        <button class="toggle-btn" data-gymview="ejercicios">Ejercicios</button>
+      </div>
+
+      <div id="view-rutinas">
+        <div class="section-sub" style="margin-top:0;">Rutinas guiadas para principiantes — tócalas para ver el detalle</div>
+        <div id="routine-list"></div>
+      </div>
+
+      <div id="view-ejercicios" style="display:none;">
+        <div class="search-wrap">
+          <span class="ic">🔍</span>
+          <input type="text" id="ex-search-input" placeholder="Buscar ejercicio, ej. plancha...">
+        </div>
+        <div class="chip-row" id="ex-chip-row"></div>
+        <div id="exercise-list"></div>
+      </div>
+    </section>
+
+    <!-- ===================== DIARIO ===================== -->
+    <section id="tab-diario" class="tab-panel">
+      <div class="section-title">📔 Mi Diario</div>
+      <div class="section-sub" id="diary-date-sub"></div>
+
+      <div class="card">
+        <div class="letter-label" style="margin-bottom:2px;">resumen de hoy</div>
+        <div class="macro-grid">
+          <div class="macro-cell"><span class="v" id="d-kcal">0</span><span class="k">kcal</span></div>
+          <div class="macro-cell"><span class="v" id="d-prot">0g</span><span class="k">proteína</span></div>
+          <div class="macro-cell"><span class="v" id="d-carb">0g</span><span class="k">carbos</span></div>
+          <div class="macro-cell"><span class="v" id="d-gras">0g</span><span class="k">grasa</span></div>
+        </div>
+      </div>
+
+      <div class="card" id="meals-wrap"></div>
+
+      <div class="card">
+        <div class="letter-label">💧 agua</div>
+        <div class="ring-wrap">
+          <svg width="88" height="88" viewBox="0 0 88 88">
+            <circle cx="44" cy="44" r="38" fill="none" stroke="#EAD9C4" stroke-width="9"/>
+            <circle id="water-ring-fg" cx="44" cy="44" r="38" fill="none" stroke="#D9A441" stroke-width="9" stroke-linecap="round"/>
+          </svg>
+          <div class="ring-label">
+            <span class="ring-num" id="water-ring-num">0</span><br>
+            <span class="ring-goal" id="water-ring-goal">de 8</span>
+          </div>
+          <div class="water-ctrl">
+            <button id="water-minus">–</button>
+            <button id="water-plus">+</button>
+          </div>
+        </div>
+        <p class="water-note" id="water-note"></p>
+      </div>
+
+      <div class="card">
+        <div class="letter-label">¿cómo te sientes hoy?</div>
+        <div class="mood-row" id="mood-row"></div>
+      </div>
+
+      <div class="card">
+        <div class="letter-label">nota del día (privada)</div>
+        <textarea class="jnote" id="journal-input" placeholder="Escribe lo que quieras recordar de hoy..."></textarea>
+        <div class="save-row">
+          <span class="saved-tick" id="journal-saved">Guardado ✓</span>
+          <button class="btn btn-plum btn-sm" id="btn-save-journal">Guardar nota</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="letter-label">🏋️ ejercicio de hoy</div>
+        <div id="exercise-log-list"></div>
+        <button class="btn btn-ghost btn-block" id="btn-log-exercise" style="margin-top:10px;">+ Registrar ejercicio</button>
+      </div>
+    </section>
+
+    <!-- ===================== PROGRESO ===================== -->
+    <section id="tab-progreso" class="tab-panel">
+      <div class="section-title">📈 Progreso</div>
+      <div class="section-sub">Tu semana, sin presión — solo para ver tu camino</div>
+
+      <div class="card chart-card">
+        <div class="letter-label">💧 agua — últimos 7 días</div>
+        <div class="bars" id="water-bars"></div>
+      </div>
+
+      <div class="card chart-card">
+        <div class="letter-label">🍽 alimentos registrados (kcal) — últimos 7 días</div>
+        <div class="bars" id="kcal-bars"></div>
+      </div>
+
+      <div class="card chart-card">
+        <div class="letter-label">🏋️ minutos de ejercicio — últimos 7 días</div>
+        <div class="bars" id="workout-bars"></div>
+      </div>
+
+      <div class="card">
+        <div class="letter-label">estado de ánimo de la semana</div>
+        <div class="mood-strip" id="mood-strip"></div>
+      </div>
+
+      <div class="card">
+        <div class="letter-label">tus logros</div>
+        <div class="ach-grid" id="ach-grid"></div>
+        <div class="ach-count" id="ach-count"></div>
+      </div>
+    </section>
+
+    <!-- ===================== ANIMO ===================== -->
+    <section id="tab-animo" class="tab-panel">
+      <div class="section-title">💌 Ánimo</div>
+      <div class="section-sub">Un espacio con cariño para ti</div>
+
+      <div class="novio-card">
+        <div class="lbl">de tu novio, para ti</div>
+        <p id="novio-msg"></p>
+        <div class="novio-nav">
+          <button id="novio-prev">‹</button>
+          <button id="novio-next">›</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="letter-label" style="margin-bottom:10px;">mis razones (solo tuyas)</div>
+        <textarea class="jnote" id="reasons-input" placeholder="¿Por qué quieres hacer este cambio? Escríbelo para ti misma..."></textarea>
+        <div class="save-row">
+          <span class="saved-tick" id="reasons-saved">Guardado ✓</span>
+          <button class="btn btn-plum btn-sm" id="btn-save-reasons">Guardar</button>
+        </div>
+      </div>
+
+      <div class="section-title" style="margin-top:22px;">Frases para ti</div>
+      <div id="msg-list"></div>
+
+      <div class="card" style="margin-top:6px;">
+        <div class="letter-label" style="margin-bottom:10px;">agregar tu propio mensaje</div>
+        <textarea class="jnote" id="custom-msg-input" placeholder="Escribe una frase que quieras recibir de vez en cuando..." style="min-height:50px;"></textarea>
+        <div class="save-row" style="justify-content:flex-end;">
+          <button class="btn btn-honey btn-sm" id="btn-add-msg">+ Agregar</button>
+        </div>
+      </div>
+
+      <p class="footnote">Los valores nutricionales de esta app son de referencia aproximada y no sustituyen la orientación de un nutriólogo o médico. Esta app no busca imponer reglas — busca acompañarte. 💛</p>
+    </section>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-tab="inicio"><span class="dot"></span><span class="ic">🏠</span>Inicio</button>
+    <button class="nav-btn" data-tab="alimentos"><span class="dot"></span><span class="ic">🍎</span>Comer</button>
+    <button class="nav-btn" data-tab="ejercicio"><span class="dot"></span><span class="ic">🏋️</span>Gym</button>
+    <button class="nav-btn" data-tab="diario"><span class="dot"></span><span class="ic">📔</span>Diario</button>
+    <button class="nav-btn" data-tab="progreso"><span class="dot"></span><span class="ic">📈</span>Progreso</button>
+    <button class="nav-btn" data-tab="animo"><span class="dot"></span><span class="ic">💌</span>Ánimo</button>
+  </nav>
+</div>
+
+<!-- MODALS -->
+<div id="overlay" class="overlay hidden">
+
+  <div id="modal-food" class="modal hidden">
+    <div class="modal-handle"></div>
+    <h3 id="mf-name"></h3>
+    <div class="por" id="mf-portion"></div>
+    <div class="nutri-grid">
+      <div class="nutri-box"><span class="v" id="mf-kcal"></span><br><span class="k">calorías</span></div>
+      <div class="nutri-box"><span class="v" id="mf-prot"></span><br><span class="k">proteína</span></div>
+      <div class="nutri-box"><span class="v" id="mf-carb"></span><br><span class="k">carbohidratos</span></div>
+      <div class="nutri-box"><span class="v" id="mf-gras"></span><br><span class="k">grasa</span></div>
+      <div class="nutri-box" id="mf-fib-box"><span class="v" id="mf-fib"></span><br><span class="k">fibra</span></div>
+    </div>
+    <div class="meal-pick-lbl">¿en qué comida la agregamos?</div>
+    <div class="meal-pick" id="meal-pick"></div>
+    <button class="btn btn-honey btn-block" id="mf-add">+ Agregar a mi diario</button>
+    <button class="btn btn-ghost btn-block" id="mf-close" style="margin-top:8px;">Cerrar</button>
+  </div>
+
+  <div id="modal-custom-food" class="modal hidden">
+    <div class="modal-handle"></div>
+    <h3>Agregar alimento</h3>
+    <div class="por" style="margin-bottom:14px;">Ponle los datos que traiga el empaque o los que conozcas</div>
+    <div class="form-field"><label>Nombre del alimento</label><input type="text" id="cf-name" placeholder="ej. Yogur de fresa marca X"></div>
+    <div class="form-field"><label>Porción</label><input type="text" id="cf-portion" placeholder="ej. 1 vaso (200g)"></div>
+    <div class="form-grid2">
+      <div class="form-field"><label>Calorías</label><input type="number" inputmode="decimal" id="cf-kcal" placeholder="0"></div>
+      <div class="form-field"><label>Proteína (g)</label><input type="number" inputmode="decimal" id="cf-prot" placeholder="0"></div>
+      <div class="form-field"><label>Carbohidratos (g)</label><input type="number" inputmode="decimal" id="cf-carb" placeholder="0"></div>
+      <div class="form-field"><label>Grasa (g)</label><input type="number" inputmode="decimal" id="cf-gras" placeholder="0"></div>
+    </div>
+    <div class="form-field"><label>Fibra (g) — opcional</label><input type="number" inputmode="decimal" id="cf-fib" placeholder="0"></div>
+    <button class="btn btn-honey btn-block" id="cf-save">Guardar alimento</button>
+    <button class="btn btn-ghost btn-block" id="cf-close" style="margin-top:8px;">Cancelar</button>
+  </div>
+
+  <div id="modal-settings" class="modal hidden">
+    <div class="modal-handle"></div>
+    <h3>Ajustes</h3>
+    <div class="por" style="margin-bottom:6px;">Personaliza tu experiencia</div>
+    <div class="settings-row">
+      <div><div class="lbl">Meta de agua diaria</div><div class="hint">Número de vasos al día</div></div>
+      <input type="number" id="set-water-goal" class="num-input" min="1" max="20">
+    </div>
+    <div class="settings-row">
+      <div><div class="lbl">Sonidos</div><div class="hint">Pequeños sonidos al registrar</div></div>
+      <button class="switch" id="set-sound"></button>
+    </div>
+    <div class="settings-row" style="flex-direction:column; align-items:stretch; gap:10px;">
+      <div><div class="lbl">Acerca de esta app</div><div class="hint">Hecha con amor para ti, mi pequeñita Meli 💛 Los valores nutricionales son de referencia aproximada.</div></div>
+    </div>
+    <button class="btn btn-ghost btn-block" id="btn-reset" style="margin-top:14px; color:var(--rose); border-color:var(--rose);">Reiniciar todos los datos</button>
+    <button class="btn btn-plum btn-block" id="settings-close" style="margin-top:10px;">Cerrar</button>
+  </div>
+
+  <div id="modal-routine" class="modal hidden">
+    <div class="modal-handle"></div>
+    <h3 id="mr-name"></h3>
+    <div class="por" id="mr-meta"></div>
+    <p style="font-size:13.5px; color:var(--plum-soft); line-height:1.5; margin:0 0 16px;" id="mr-desc"></p>
+    <div class="card" style="padding:12px 14px; margin-bottom:16px;" id="mr-exlist"></div>
+    <p style="font-size:11.5px; color:var(--plum-soft); margin:0 0 14px; line-height:1.5;">Guía general para principiantes. Si sientes dolor (no solo cansancio), detente. Para dudas de técnica, pregunta al personal del gym.</p>
+    <button class="btn btn-honey btn-block" id="mr-register">Registrar este entrenamiento</button>
+    <button class="btn btn-ghost btn-block" id="mr-close" style="margin-top:8px;">Cerrar</button>
+  </div>
+
+  <div id="modal-exercise-info" class="modal hidden">
+    <div class="modal-handle"></div>
+    <h3 id="mei-name"></h3>
+    <div class="por" id="mei-cat"></div>
+    <p style="font-size:14px; line-height:1.55; margin:0 0 12px;" id="mei-desc"></p>
+    <p style="font-size:13px; color:var(--honey-dark); background:var(--honey-light); border-radius:12px; padding:10px 12px; margin:0 0 18px;" id="mei-tip"></p>
+    <button class="btn btn-ghost btn-block" id="mei-close">Cerrar</button>
+  </div>
+
+  <div id="modal-log-exercise" class="modal hidden">
+    <div class="modal-handle"></div>
+    <h3>Registrar ejercicio</h3>
+    <div class="por" style="margin-bottom:14px;">Rápido, sin números que juzgar</div>
+    <div class="meal-pick-lbl">tipo</div>
+    <div class="meal-pick" id="ex-type-pick">
+      <button data-extype="cardio" class="sel">🏃 Cardio</button>
+      <button data-extype="estiramiento">🧘 Estiramiento</button>
+      <button data-extype="otro">✨ Otro</button>
+    </div>
+    <div class="form-field"><label>¿Cuántos minutos?</label><input type="number" inputmode="numeric" id="ex-duration" placeholder="ej. 20"></div>
+    <div class="meal-pick-lbl">¿cómo te sentiste?</div>
+    <div class="mood-row" id="ex-feeling-row">
+      <button class="mood-btn" data-feel="Con energía">💪<span>Con energía</span></button>
+      <button class="mood-btn" data-feel="Bien">😊<span>Bien</span></button>
+      <button class="mood-btn" data-feel="Normal">😐<span>Normal</span></button>
+      <button class="mood-btn" data-feel="Cansada">😓<span>Cansada</span></button>
+    </div>
+    <button class="btn btn-honey btn-block" id="ex-log-save" style="margin-top:16px;">Guardar</button>
+    <button class="btn btn-ghost btn-block" id="ex-log-close" style="margin-top:8px;">Cancelar</button>
+  </div>
+
+  <div id="modal-welcome" class="modal hidden">
+    <div class="welcome-body">
+      <div class="seal"><span>🍯</span></div>
+      <h2>Bienvenida, mi pequeñita Meli 💕</h2>
+      <p>Esta app es un espacio para ti: para sentirte acompañada, informada y en paz con este nuevo comienzo.<br><br>No hay reglas estrictas ni números que cumplir a la perfección — solo herramientas para conocer lo que comes, recetas para inspirarte, y recordarte todos los días lo increíble que ya eres.<br><br>Vamos paso a paso, juntos. 🌿</p>
+      <button class="btn btn-honey btn-block" id="welcome-start">Empezar</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
